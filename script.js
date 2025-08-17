@@ -25,6 +25,7 @@ function saveCart(cart) {
 
 // Render product list
 function renderProducts() {
+  productList.innerHTML = ""; // clear first
   products.forEach((product) => {
     const li = document.createElement("li");
     li.innerHTML = `
@@ -45,7 +46,7 @@ function renderProducts() {
 
 // Render cart list
 function renderCart() {
-  cartList.innerHTML = ""; // Clear existing list
+  cartList.innerHTML = "";
   const cart = getCart();
 
   cart.forEach((item) => {
@@ -60,16 +61,15 @@ function addToCart(productId) {
   const product = products.find((p) => p.id === productId);
   if (!product) return;
 
-  const cart = getCart();  
-  cart.push(product);      
-  saveCart(cart);          
+  const cart = getCart();
+  cart.push(product);         // append instead of overwrite
+  saveCart(cart);
   renderCart();
 }
 
-
 // Clear cart
 function clearCart() {
-  sessionStorage.removeItem("cart");
+  saveCart([]);               
   renderCart();
 }
 
